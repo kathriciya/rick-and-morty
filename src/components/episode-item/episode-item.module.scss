@@ -1,0 +1,15 @@
+@import './../../style/_variable';
+
+.title {
+  color: $main;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.date {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  color: grey;
+  font-size: 14px;
+}
