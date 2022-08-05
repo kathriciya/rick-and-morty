@@ -1,0 +1,18 @@
+@import './../../style/_variable';
+
+.search_panel {
+  position: relative;
+}
+
+.input {
+  padding-left: 40px;
+}
+
+.search_icon {
+  position: absolute;
+  color: $main;
+  height: 24px;
+  width: 24px;
+  left: 11px;
+  top: 11px;
+}
