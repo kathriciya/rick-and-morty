@@ -9,7 +9,7 @@ import SeasonFilter from '../season-filter/season-filter';
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
   console.log('episodes: ', episodes);
-  const [filter, setFilter] = useState('Season 1');
+  const [filter, setFilter] = useState('S05');
   const [term, setTerm] = useState('');
 
   useEffect(() => {
@@ -20,21 +20,7 @@ const App = () => {
   }, []);
 
   const filterPost = (items, filter) => {
-    switch (filter) {
-      case 'Season 1':
-        console.log('items:,', items);
-        return items.filter((item) => /S01/.test(item.episode));
-      case 'Season 2':
-        return items.filter((item) => /S02/.test(item.episode));
-      case 'Season 3':
-        return items.filter((item) => /S03/.test(item.episode));
-      case 'Season 4':
-        return items.filter((item) => /S04/.test(item.episode));
-      case 'Season 5':
-        return items.filter((item) => /S05/.test(item.episode));
-      default:
-        return items.filter((item) => /S01/.test(item.episode));
-    }
+    return items.filter((item) => item.episode.includes(filter));
   };
 
   const onFilterSelect = (filter) => {
