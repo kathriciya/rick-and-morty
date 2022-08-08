@@ -1,0 +1,24 @@
+@import './../../style/_variable';
+
+.app {
+  width: 900px;
+  margin-top: 50px;
+}
+
+.app_panel {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding: 25px;
+  color: #fff;
+  background: $main;
+  border-radius: 4px;
+  box-shadow: 15px 15px 30px rgb(0 0 0 / 0.15);
+}
+
+.title {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: $main;
+  font-weight: 700;
+  text-align: center;
+}
