@@ -3,5 +3,15 @@ import EpisodePage from './episode-page/episode-page';
 import CharacterPage from './character-page/character-page';
 import NotFoundPage from './not-found-page/not-found-page';
 import CataloguePage from './catalogue-page/catalogue-page';
+import LocationAllPage from './location-all-page/location-all-page';
+import CharacterAllPage from './character-all-page/character-all-page';
 
-export { MainPage, EpisodePage, CharacterPage, NotFoundPage, CataloguePage };
+export {
+  MainPage,
+  EpisodePage,
+  CharacterPage,
+  NotFoundPage,
+  CataloguePage,
+  LocationAllPage,
+  CharacterAllPage,
+};

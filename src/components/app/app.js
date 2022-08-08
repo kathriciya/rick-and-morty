@@ -8,6 +8,8 @@ import {
   CharacterPage,
   NotFoundPage,
   CataloguePage,
+  LocationAllPage,
+  CharacterAllPage,
 } from '../pages';
 import Footer from '../footer/footer';
 import Header from '../header/header';
@@ -68,6 +70,8 @@ const App = () => {
           path='/episode/:episodeId/character/:characterId'
           element={<CharacterPage />}
         />
+        <Route path='/location' element={<LocationAllPage />} />
+        <Route path='/character' element={<CharacterAllPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
       <Footer />
