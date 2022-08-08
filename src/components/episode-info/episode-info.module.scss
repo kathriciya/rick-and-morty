@@ -1,0 +1,12 @@
+@import './../../style/_variable';
+
+.title {
+  color: $main;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.date {
+  color: grey;
+  font-size: 14px;
+}
