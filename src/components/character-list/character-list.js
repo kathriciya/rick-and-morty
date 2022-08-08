@@ -7,7 +7,6 @@ const CharacterList = ({ episode }) => {
   const elements = episode.characters.map((item, i) => (
     <Character key={i} linkToCharacter={item} />
   ));
-  // console.log('elementsdd: ', elements);
   return (
     <div className={s.character_list_wrap}>
       <ul className={cn('list-group', s.list)}>{elements}</ul>

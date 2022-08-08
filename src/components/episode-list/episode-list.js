@@ -13,6 +13,7 @@ const EpisodeList = ({ episodes }) => {
       title={item.name}
       episode={item.episode}
       url={item.url}
+      episodeId={item.id}
     />
   ));
   return (

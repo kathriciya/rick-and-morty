@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import cn from 'classnames';
-import api from '../../api/api';
-import Layout from '../layout/layout';
+import api from '../../../api/api';
+import Layout from '../../layout/layout';
 import s from './character-page.mudule.scss';
 
 const CharacterPage = () => {
