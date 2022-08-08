@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import cn from 'classnames';
 import api from '../../api/api';
+import Layout from '../layout/layout';
 import s from './character-page.mudule.scss';
 
 const CharacterPage = () => {
@@ -38,46 +39,48 @@ const CharacterPage = () => {
   };
 
   return (
-    <div className='d-flex flex-column'>
-      <div className='d-flex justify-content-between'>
-        <div className='d-flex flex-column '>
-          <span className={s.info}>
-            <b className={s.label}>Name:</b> {person.name}
-          </span>
-          <span className={s.info}>
-            <b className={s.label}>Species:</b> {person.species}
-          </span>
-          <span className={s.info}>
-            <b className={s.label}>Gender:</b> {person.gender}
-          </span>
-          <span className={s.info}>
-            <b className={s.label}>Status:</b> {person.status}
-          </span>
-          <span className={s.info}>
-            <b className={s.label}>Origin:</b> {person.origin}
-          </span>
-          <span className={s.info}>
-            <b className={s.label}>Location:</b> {person.location}
-          </span>
-          <span className={s.info}>
-            <b className={s.label}>Number of episodes: </b>
-            {person.episodes.length}
-          </span>
+    <Layout title='Character information'>
+      <div className='d-flex flex-column'>
+        <div className='d-flex justify-content-between'>
+          <div className='d-flex flex-column '>
+            <span className={s.info}>
+              <b className={s.label}>Name:</b> {person.name}
+            </span>
+            <span className={s.info}>
+              <b className={s.label}>Species:</b> {person.species}
+            </span>
+            <span className={s.info}>
+              <b className={s.label}>Gender:</b> {person.gender}
+            </span>
+            <span className={s.info}>
+              <b className={s.label}>Status:</b> {person.status}
+            </span>
+            <span className={s.info}>
+              <b className={s.label}>Origin:</b> {person.origin}
+            </span>
+            <span className={s.info}>
+              <b className={s.label}>Location:</b> {person.location}
+            </span>
+            <span className={s.info}>
+              <b className={s.label}>Number of episodes: </b>
+              {person.episodes.length}
+            </span>
+          </div>
+          <img className={s.image} src={person.image} alt='Person' />
         </div>
-        <img className={s.image} src={person.image} alt='Person' />
-      </div>
 
-      <span className={s.info__last}>
-        <b className={s.label}>Episodes:</b>
-      </span>
-      <ul className={s.list}>
-        {person.episodes.map((item, i) => (
-          <li className={s.character_item} key={i}>
-            {modifyUrl(item)}
-          </li>
-        ))}
-      </ul>
-    </div>
+        <span className={s.info__last}>
+          <b className={s.label}>Episodes:</b>
+        </span>
+        <ul className={s.list}>
+          {person.episodes.map((item, i) => (
+            <li className={s.character_item} key={i}>
+              {modifyUrl(item)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Layout>
   );
 };
 
