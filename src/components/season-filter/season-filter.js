@@ -17,7 +17,7 @@ const SeasonFilter = ({ filter, onFilterSelect }) => {
     return (
       <button
         type='button'
-        className={cn(`btn ${clazz}`, s.button)}
+        className={cn(`btn ${clazz}`, s.button, { [s.btn_color]: active })}
         key={name}
         onClick={() => onFilterSelect(name)}
       >
