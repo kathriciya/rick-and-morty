@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import cn from 'classnames';
 import api from '../../api/api';
 
-import s from './app.module.scss';
 import { MainPage, EpisodePage, CharacterPage } from '../pages';
+import Footer from '../footer/footer';
+import Header from '../header/header';
 
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
@@ -41,32 +41,29 @@ const App = () => {
   const visibleSeason = filterPost(searchEmp(episodes, term), filter);
   return (
     <BrowserRouter>
-      <div className={cn('container', s.app)}>
-        <h1 className={cn('text-center', s.title)}>
-          Rick and Morty episodes catalogue
-        </h1>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <MainPage
-                onUpdateSearch={onUpdateSearch}
-                filter={filter}
-                onFilterSelect={onFilterSelect}
-                visibleSeason={visibleSeason}
-              />
-            }
-          />
-          <Route
-            path='/:episodeId'
-            element={<EpisodePage visibleSeason={visibleSeason} />}
-          />
-          <Route
-            path='/:episodeId/character/:characterId'
-            element={<CharacterPage />}
-          />
-        </Routes>
-      </div>
+      <Header />
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <MainPage
+              onUpdateSearch={onUpdateSearch}
+              filter={filter}
+              onFilterSelect={onFilterSelect}
+              visibleSeason={visibleSeason}
+            />
+          }
+        />
+        <Route
+          path='/:episodeId'
+          element={<EpisodePage visibleSeason={visibleSeason} />}
+        />
+        <Route
+          path='/:episodeId/character/:characterId'
+          element={<CharacterPage />}
+        />
+      </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
