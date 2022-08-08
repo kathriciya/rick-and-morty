@@ -27,3 +27,19 @@ header .wrapper {
 .item {
   margin-left: 15px;
 }
+
+.link {
+  color: $bg;
+  font-size: 25px;
+  text-decoration: none;
+
+  &:hover {
+    color: $bg !important;
+  }
+}
+
+.active {
+  padding-bottom: 3px;
+  color: $bg !important;
+  border-bottom: 3px solid $bg;
+}
