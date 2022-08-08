@@ -1,0 +1,18 @@
+@import './../../../style/_variable';
+
+.error {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  color: tomato;
+  font-size: 52px;
+}
+
+.link {
+  display: block;
+  margin-top: 30px;
+  color: $main;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+}
