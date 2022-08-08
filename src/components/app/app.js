@@ -1,59 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '../../api/api';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import cn from 'classnames';
+import api from '../../api/api';
+
 import s from './app.module.scss';
-import EpisodeList from '../episode-list/episode-list';
-import SearchPanel from '../search-panel/search-panel';
-import SeasonFilter from '../season-filter/season-filter';
+import { MainPage, EpisodePage, CharacterPage } from '../pages';
 
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
-  console.log('episodes: ', episodes);
-  const [filter, setFilter] = useState('S05');
+  // console.log('episodes: ', episodes);
+  const [filter, setFilter] = useState('S01');
   const [term, setTerm] = useState('');
 
   useEffect(() => {
     api.getAllEpisodes().then((res) => {
       setEpisodes(res);
-      console.log(res);
     });
   }, []);
 
-  const filterPost = (items, filter) => {
-    return items.filter((item) => item.episode.includes(filter));
+  const filterPost = (items, filterType) =>
+    items.filter((item) => item.episode.includes(filterType));
+
+  const onFilterSelect = (filterType) => {
+    setFilter(filterType);
   };
 
-  const onFilterSelect = (filter) => {
-    setFilter(filter);
-  };
-
-  const searchEmp = (items, term) => {
-    if (term.length === 0) {
+  const searchEmp = (items, character) => {
+    if (character.length === 0) {
       return items;
     }
 
-    const value = term.toLowerCase();
-    return items.filter((item) => {
-      return item.name.toLowerCase().startsWith(value);
-    });
+    const value = character.toLowerCase();
+    return items.filter((item) => item.name.toLowerCase().startsWith(value));
   };
 
-  const onUpdateSearch = (term) => {
-    setTerm(term);
+  const onUpdateSearch = (character) => {
+    setTerm(character);
   };
 
   const visibleSeason = filterPost(searchEmp(episodes, term), filter);
   return (
-    <div className={cn('container', s.app)}>
-      <h1 className={cn('text-center', s.title)}>
-        Rick and Morty episodes catalogue
-      </h1>
-      <div className={s.app_panel}>
-        <SearchPanel onUpdateSearch={onUpdateSearch} />
-        <SeasonFilter filter={filter} onFilterSelect={onFilterSelect} />
+    <BrowserRouter>
+      <div className={cn('container', s.app)}>
+        <h1 className={cn('text-center', s.title)}>
+          Rick and Morty episodes catalogue
+        </h1>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <MainPage
+                onUpdateSearch={onUpdateSearch}
+                filter={filter}
+                onFilterSelect={onFilterSelect}
+                visibleSeason={visibleSeason}
+              />
+            }
+          />
+          <Route
+            path='/:episodeId'
+            element={<EpisodePage visibleSeason={visibleSeason} />}
+          />
+          <Route
+            path='/:episodeId/character/:characterId'
+            element={<CharacterPage />}
+          />
+        </Routes>
       </div>
-      <EpisodeList episodes={visibleSeason} />
-    </div>
+    </BrowserRouter>
   );
 };
 export default App;
