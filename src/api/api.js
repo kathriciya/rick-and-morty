@@ -1,18 +1,19 @@
 class Api {
-  #baseURL;
-
-  constructor(baseURL) {
-    this.#baseURL = baseURL;
-  }
+  #apiBase = 'https://rickandmortyapi.com/api';
 
   async getAllEpisodes() {
     const data = [];
-    let url = `${this.#baseURL}/episode`;
+    let url = `${this.#apiBase}/episode`;
     do {
+      // eslint-disable-next-line no-await-in-loop
       const res = await fetch(url, {
         method: 'GET',
-      }).then((res) => {
-        return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`Ошибка: ${response.status}`);
+        } else {
+          return response.json();
+        }
       });
       url = res.info.next;
       data.push(...res.results);
@@ -20,6 +21,19 @@ class Api {
 
     return data;
   }
+
+  getCharacter(id) {
+    return fetch(`${this.#apiBase}/character/${id}`, {
+      method: 'GET',
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      } else {
+        return response.json();
+      }
+    });
+  }
 }
 
-export const api = new Api('https://rickandmortyapi.com/api');
+const api = new Api();
+export default api;
