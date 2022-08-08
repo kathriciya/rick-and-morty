@@ -2,14 +2,42 @@
 
 .title {
   color: $main;
-  font-size: 24px;
   font-weight: 600;
+  font-size: 24px;
 }
 
 .date {
   display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
   color: grey;
   font-size: 14px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.episode {
+  display: flex;
+  color: $black;
+}
+
+.episode_item {
+  box-shadow: 5px 5px 10px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+  transition: 0.3s transform;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.number {
+  margin-right: 5px;
+  color: $main;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.episode_inner {
+  margin-top: auto;
 }
