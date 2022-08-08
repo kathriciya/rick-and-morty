@@ -1,0 +1,9 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-rational-order","stylelint-prettier/recommended"],
+  "customSyntax": "postcss-scss",
+  "plugins": ["stylelint-order", "stylelint-scss"],
+  "rules": {
+    "alpha-value-notation": "number",
+    "selector-class-pattern": null
+  }
+}
