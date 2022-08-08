@@ -1,0 +1,29 @@
+@import './../../style/_variable';
+
+header {
+  width: 100%;
+  background: $main;
+}
+
+header .wrapper {
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
+  padding: 2rem 3rem;
+  max-width: 1200px;
+  align-items: center;
+  justify-content: flex-end;
+  color: $bg;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin-left: 15px;
+}
