@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import api from '../../api/api';
 
-import { MainPage, EpisodePage, CharacterPage } from '../pages';
+import {
+  MainPage,
+  EpisodePage,
+  CharacterPage,
+  NotFoundPage,
+  CataloguePage,
+} from '../pages';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
-  // console.log('episodes: ', episodes);
   const [filter, setFilter] = useState('S01');
   const [term, setTerm] = useState('');
 
@@ -43,10 +48,11 @@ const App = () => {
     <BrowserRouter>
       <Header />
       <Routes>
+        <Route path='/' element={<MainPage />} />
         <Route
-          path='/'
+          path='/episode'
           element={
-            <MainPage
+            <CataloguePage
               onUpdateSearch={onUpdateSearch}
               filter={filter}
               onFilterSelect={onFilterSelect}
@@ -55,13 +61,14 @@ const App = () => {
           }
         />
         <Route
-          path='/:episodeId'
+          path='/episode/:episodeId'
           element={<EpisodePage visibleSeason={visibleSeason} />}
         />
         <Route
-          path='/:episodeId/character/:characterId'
+          path='/episode/:episodeId/character/:characterId'
           element={<CharacterPage />}
         />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
