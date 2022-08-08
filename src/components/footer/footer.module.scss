@@ -1,0 +1,19 @@
+@import './../../style/_variable';
+
+.footer {
+  width: 100%;
+  background: $main;
+}
+
+.footer .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  color: $bg;
+  font-weight: 600;
+  font-size: 24px;
+}
