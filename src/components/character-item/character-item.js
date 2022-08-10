@@ -23,7 +23,7 @@ const Character = ({ linkToCharacter }) => {
         s.character_item
       )}
     >
-      <Link className={s.link} to={`character/${personId}`}>
+      <Link className={s.link} to={`/character/${personId}`}>
         <img className={s.character_img} src={person.image} alt='character' />
         <span className={s.character_name}>{person.name}</span>
       </Link>

@@ -29,7 +29,8 @@
     "unnamedComponents": "arrow-function"
       }
     ],
-    "react/no-array-index-key": 1
+    "react/no-array-index-key": 1,
+    "arrow-body-style": "off"
   },
   "settings": {
     "react": {

@@ -10,12 +10,14 @@ import {
   CataloguePage,
   LocationAllPage,
   CharacterAllPage,
+  LocationPage,
 } from '../pages';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
+  console.log('episodes: ', episodes);
   const [filter, setFilter] = useState('S01');
   const [term, setTerm] = useState('');
 
@@ -66,12 +68,10 @@ const App = () => {
           path='/episode/:episodeId'
           element={<EpisodePage visibleSeason={visibleSeason} />}
         />
-        <Route
-          path='/episode/:episodeId/character/:characterId'
-          element={<CharacterPage />}
-        />
         <Route path='/location' element={<LocationAllPage />} />
+        <Route path='/location/:locationId' element={<LocationPage />} />
         <Route path='/character' element={<CharacterAllPage />} />
+        <Route path='/character/:characterId' element={<CharacterPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
       <Footer />

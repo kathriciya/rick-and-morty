@@ -15,7 +15,7 @@ const SearchPanel = ({ onUpdateSearch }) => {
       <input
         type='text'
         className={cn('form-control', s.input)}
-        placeholder='Episode Name'
+        placeholder='Name'
         value={term}
         onChange={onChangeValue}
       />
