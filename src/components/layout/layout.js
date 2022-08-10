@@ -1,18 +1,19 @@
 import React from 'react';
 import s from './layout.module.scss';
 
-const Layout = ({ title, urlBg, colorBg, children }) => {
+const Layout = ({ title, urlBg, colorBg, children, desc }) => {
   const layotBg = {
     backgroundImage: urlBg ? `url("${urlBg}")` : null,
     backgroundColor: `${colorBg}`,
   };
   return (
-    <section className={s.root} style={layotBg}>
+    <main className={s.main} style={layotBg}>
       <div className={s.wrapper}>
         <h2 className={s.title}>{title}</h2>
-        <div className={`{${s.desc}}, ${s.full}`}>{children}</div>
+        <p className={s.desc}>{desc}</p>
+        <div className={s.inner}>{children}</div>
       </div>
-    </section>
+    </main>
   );
 };
 

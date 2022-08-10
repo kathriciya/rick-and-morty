@@ -4,6 +4,7 @@ import s from './location-all-page.module.scss';
 import Layout from '../../layout/layout';
 import api from '../../../api/api';
 import SearchPanel from '../../search-panel/search-panel';
+import Button from '../../button/button';
 
 const LocationAllPage = () => {
   const [locations, setLocations] = useState([]);
@@ -51,11 +52,12 @@ const LocationAllPage = () => {
   const visibleLocations = searchEmp(locations, term);
 
   return (
-    <Layout title='Locations'>
-      <span>A total of {locations.length} locations.</span>
-      <span> {pageLocations.length} locations shown.</span>
+    <Layout
+      title='Locations'
+      desc={` A total of ${locations.length} locations. ${pageLocations.length} locations shown`}
+    >
       <div className={s.app_panel}>
-        <SearchPanel onUpdateSearch={onUpdateSearch} />
+        <SearchPanel className={s.search} onUpdateSearch={onUpdateSearch} />
       </div>
       {term.length > 0 ? (
         <ul className={s.list}>
@@ -82,15 +84,13 @@ const LocationAllPage = () => {
               );
             })}
           </ul>
-          <button
-            className={s.button}
+          <Button
+            className={s.load}
             disabled={newItemLoading}
             style={{ display: locationsEnded ? 'none' : 'block' }}
-            type='button'
+            label='Load More'
             onClick={() => onRequest(page)}
-          >
-            Load More
-          </button>
+          />
         </div>
       )}
     </Layout>

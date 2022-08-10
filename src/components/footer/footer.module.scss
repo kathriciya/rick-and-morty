@@ -1,8 +1,9 @@
 @import './../../style/_variable';
 
 .footer {
+  grid-area: footer;
   width: 100%;
-  background: $main;
+  background: $dark;
 }
 
 .footer .wrapper {
@@ -15,5 +16,5 @@
   padding: 2rem 3rem;
   color: $bg;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
 }

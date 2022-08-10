@@ -8,18 +8,16 @@ const CharacterList = ({ episode, location }) => {
   //   <Character key={i} linkToCharacter={item} />
   // ));
   return (
-    <div className={s.character_list_wrap}>
-      <ul className={cn('list-group', s.list)}>
-        {episode &&
-          episode.characters.map((item, i) => (
-            <Character key={i} linkToCharacter={item} />
-          ))}
-        {location &&
-          location.residents.map((item, i) => (
-            <Character key={i} linkToCharacter={item} />
-          ))}
-      </ul>
-    </div>
+    <ul className={cn('list-group', s.list)}>
+      {episode &&
+        episode.characters.map((item, i) => (
+          <Character key={i} linkToCharacter={item} />
+        ))}
+      {location &&
+        location.residents.map((item, i) => (
+          <Character key={i} linkToCharacter={item} />
+        ))}
+    </ul>
   );
 };
 

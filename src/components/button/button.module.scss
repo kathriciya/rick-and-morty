@@ -1,0 +1,39 @@
+@import './../../style/_variable';
+
+.button {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 350px;
+  margin-left: auto;
+  padding: 1rem;
+  color: $bg;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: $main;
+  border: 1px solid $main;
+  cursor: pointer;
+  transition: all ease-in-out 0.25s;
+}
+
+.button:hover {
+  color: $main;
+  background: transparent;
+  border: 1px solid $main;
+  outline: none;
+  transition: all ease-in-out 0s;
+}
+
+.button:active {
+  padding: 1.05rem 1rem calc(0.95rem - 1px) calc(1rem - 1px);
+  color: $main;
+  background: transparent;
+  border: 1px solid $main;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  outline: none;
+  transition: all ease-in-out 0s;
+}

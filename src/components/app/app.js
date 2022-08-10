@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import api from '../../api/api';
+import s from './app.module.scss';
 
 import {
   MainPage,
@@ -17,7 +18,7 @@ import Header from '../header/header';
 
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
-  console.log('episodes: ', episodes);
+  // console.log('episodes: ', episodes);
   const [filter, setFilter] = useState('S01');
   const [term, setTerm] = useState('');
 
@@ -50,31 +51,33 @@ const App = () => {
   const visibleSeason = filterPost(searchEmp(episodes, term), filter);
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path='/' element={<MainPage />} />
-        <Route
-          path='/episode'
-          element={
-            <CataloguePage
-              onUpdateSearch={onUpdateSearch}
-              filter={filter}
-              onFilterSelect={onFilterSelect}
-              visibleSeason={visibleSeason}
-            />
-          }
-        />
-        <Route
-          path='/episode/:episodeId'
-          element={<EpisodePage visibleSeason={visibleSeason} />}
-        />
-        <Route path='/location' element={<LocationAllPage />} />
-        <Route path='/location/:locationId' element={<LocationPage />} />
-        <Route path='/character' element={<CharacterAllPage />} />
-        <Route path='/character/:characterId' element={<CharacterPage />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
+      <div className={s.grid}>
+        <Header />
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route
+            path='/episode'
+            element={
+              <CataloguePage
+                onUpdateSearch={onUpdateSearch}
+                filter={filter}
+                onFilterSelect={onFilterSelect}
+                visibleSeason={visibleSeason}
+              />
+            }
+          />
+          <Route
+            path='/episode/:episodeId'
+            element={<EpisodePage visibleSeason={visibleSeason} />}
+          />
+          <Route path='/location' element={<LocationAllPage />} />
+          <Route path='/location/:locationId' element={<LocationPage />} />
+          <Route path='/character' element={<CharacterAllPage />} />
+          <Route path='/character/:characterId' element={<CharacterPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 };

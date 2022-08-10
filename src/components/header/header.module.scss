@@ -1,21 +1,19 @@
 @import './../../style/_variable';
 
-header {
+.header {
+  grid-area: header;
   width: 100%;
-  background: $main;
+  background: $dark;
 }
 
-header .wrapper {
+.header .wrapper {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 3rem;
-  color: $bg;
-  font-weight: 600;
-  font-size: 24px;
 }
 
 .list {
@@ -25,12 +23,14 @@ header .wrapper {
 }
 
 .item {
-  margin-left: 15px;
+  margin-left: 1rem;
+  color: $bg;
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 .link {
   color: $bg;
-  font-size: 25px;
   text-decoration: none;
 
   &:hover {
@@ -42,4 +42,15 @@ header .wrapper {
   padding-bottom: 3px;
   color: $bg !important;
   border-bottom: 3px solid $bg;
+}
+
+.logo {
+  display: block;
+  width: 250px;
+  height: auto;
+  margin-top: -15px;
+
+  @media (max-width: 991px) {
+    width: 150px;
+  }
 }

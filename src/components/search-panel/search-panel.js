@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 import s from './search-panel.module.scss';
 
-const SearchPanel = ({ onUpdateSearch }) => {
+const SearchPanel = ({ onUpdateSearch, className }) => {
   const [term, setTerm] = useState('');
   const onChangeValue = (e) => {
     const val = e.target.value;
@@ -10,7 +10,7 @@ const SearchPanel = ({ onUpdateSearch }) => {
     onUpdateSearch(val);
   };
   return (
-    <div className={s.search_panel}>
+    <div className={cn(s.search_panel, className)}>
       <i className={cn('fas fa-magnifying-glass', s.search_icon)} />
       <input
         type='text'
