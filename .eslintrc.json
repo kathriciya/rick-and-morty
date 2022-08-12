@@ -30,7 +30,8 @@
       }
     ],
     "react/no-array-index-key": 1,
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "no-underscore-dangle": 0
   },
   "settings": {
     "react": {
