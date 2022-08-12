@@ -3,7 +3,6 @@ class Api {
 
   getAllResource = async (endpoint) => {
     const data = [];
-    // eslint-disable-next-line no-underscore-dangle
     let url = `${this._apiBase}/${endpoint}`;
     do {
       // eslint-disable-next-line no-await-in-loop
@@ -24,7 +23,6 @@ class Api {
   };
 
   getResource = async (url) => {
-    // eslint-disable-next-line no-underscore-dangle
     const res = await fetch(`${this._apiBase}${url}`);
 
     if (!res.ok) {
@@ -36,7 +34,7 @@ class Api {
 
   getCharacter = async (id) => {
     const res = await this.getResource(`/character/${id}`);
-    return res;
+    return this._transformCharacter(res);
   };
 
   getLocation = async (id) => {
@@ -66,7 +64,6 @@ class Api {
 
   getAllCharacters = async () => {
     const res = await this.getAllResource('/character');
-    // eslint-disable-next-line no-underscore-dangle
     return res.map(this._transformAllCharacters);
   };
 
@@ -84,6 +81,21 @@ class Api {
       id: char.id,
       name: char.name,
       image: char.image,
+    };
+  };
+
+  // eslint-disable-next-line class-methods-use-this
+  _transformCharacter = (char) => {
+    return {
+      id: char.id,
+      name: char.name,
+      image: char.image,
+      species: char.species,
+      gender: char.gender,
+      status: char.status,
+      origin: char.origin.name,
+      location: char.location.name,
+      episode: [...char.episode],
     };
   };
 }
