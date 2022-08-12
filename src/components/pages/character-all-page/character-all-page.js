@@ -5,14 +5,18 @@ import Layout from '../../layout/layout';
 import api from '../../../api/api';
 import SearchPanel from '../../search-panel/search-panel';
 import Button from '../../button/button';
+import Error from '../../error-message/error-message';
+import Loader from '../../loader/loader';
 
 const CharacterAllPage = () => {
   const [characters, setCharacters] = useState([]);
   const [pageCharacters, setPageCharacters] = useState([]);
   const [page, setPage] = useState(1);
-  const [newItemLoading, setnewItemLoading] = useState(false);
+  const [newItemLoading, setNewItemLoading] = useState(false);
   const [charactersEnded, setCharactersEnded] = useState(false);
   const [term, setTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false);
 
   const onCharactersLoaded = (newCharactersList) => {
     let ended = false;
@@ -20,19 +24,34 @@ const CharacterAllPage = () => {
       ended = true;
     }
     setPageCharacters([...pageCharacters, ...newCharactersList]);
-    setnewItemLoading(false);
+    setLoading(false);
+    setNewItemLoading(false);
     setPage(page + 1);
     setCharactersEnded(ended);
   };
 
+  const onCharListLoading = () => {
+    setNewItemLoading(true);
+  };
+
+  const onError = () => {
+    setErr(true);
+    setLoading(false);
+  };
+
   const onRequest = (pageNum, initial) => {
+    onCharListLoading();
     // eslint-disable-next-line no-unused-expressions
-    initial ? setnewItemLoading(false) : setnewItemLoading(true);
-    api.getPageCharacters(pageNum).then(onCharactersLoaded);
+    initial ? setNewItemLoading(false) : setNewItemLoading(true);
+    api.getPageCharacters(pageNum).then(onCharactersLoaded).catch(onError);
+  };
+  const onAllCharLoading = (res) => {
+    setCharacters(res);
+    setLoading(false);
   };
 
   useEffect(() => {
-    api.getAllCharacters().then((res) => setCharacters(res));
+    api.getAllCharacters().then(onAllCharLoading).catch(onError);
   }, []);
 
   useEffect(() => {
@@ -51,6 +70,14 @@ const CharacterAllPage = () => {
 
   const visibleCharacters = searchEmp(characters, term);
 
+  if (err) {
+    return <Error />;
+  }
+
+  if (loading && !err) {
+    return <Loader />;
+  }
+
   return (
     <Layout
       title='Characters'
@@ -59,19 +86,7 @@ const CharacterAllPage = () => {
       <div className={s.app_panel}>
         <SearchPanel className={s.search} onUpdateSearch={onUpdateSearch} />
       </div>
-      {term.length > 0 ? (
-        <ul className={s.list}>
-          {visibleCharacters.map((item) => {
-            return (
-              <li key={item.id} name={item.name} className={s.item}>
-                <Link className={s.link} to={`/character/${item.id}`}>
-                  {item.name}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
+      {characters.length !== 0 && term.length === 0 ? (
         <div>
           <ul className={s.list}>
             {pageCharacters.map((item) => {
@@ -92,6 +107,18 @@ const CharacterAllPage = () => {
             onClick={() => onRequest(page)}
           />
         </div>
+      ) : (
+        <ul className={s.list}>
+          {visibleCharacters.map((item) => {
+            return (
+              <li key={item.id} name={item.name} className={s.item}>
+                <Link className={s.link} to={`/character/${item.id}`}>
+                  {item.name}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </Layout>
   );
