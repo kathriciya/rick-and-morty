@@ -11,7 +11,7 @@ const CharacterPage = () => {
     image: '',
     name: '',
     location: '',
-    episodes: [],
+    episode: [],
     species: '',
     gender: '',
     status: '',
@@ -20,16 +20,7 @@ const CharacterPage = () => {
 
   useEffect(() => {
     api.getCharacter(characterId).then((res) => {
-      setPerson({
-        image: res.image,
-        name: res.name,
-        species: res.species,
-        gender: res.gender,
-        status: res.status,
-        origin: res.origin.name,
-        location: res.location.name,
-        episodes: [...res.episode],
-      });
+      setPerson(res);
     });
   });
 
@@ -63,7 +54,7 @@ const CharacterPage = () => {
             </span>
             <span className={s.info}>
               <b className={s.label}>Number of episodes: </b>
-              {person.episodes.length}
+              {person.episode.length}
             </span>
           </div>
           <img className={s.image} src={person.image} alt='Person' />
@@ -73,7 +64,7 @@ const CharacterPage = () => {
           <b className={s.label}>Episodes:</b>
         </span>
         <ul className={s.list}>
-          {person.episodes.map((item, i) => (
+          {person.episode.map((item, i) => (
             <li className={s.character_item} key={i}>
               {modifyUrl(item)}
             </li>
