@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEpisodesAsync, selectEpisodesData } from '../../store/episodes';
 import api from '../../api/api';
 import s from './app.module.scss';
 
@@ -18,15 +20,22 @@ import Header from '../header/header';
 
 const App = () => {
   const [episodes, setEpisodes] = useState([]);
-  // console.log('episodes: ', episodes);
+  console.log('episodes: ', episodes);
+  const dispatch = useDispatch();
+  const episodesRedux = useSelector(selectEpisodesData);
+  console.log('episodesRedux: ', episodesRedux);
+
   const [filter, setFilter] = useState('S01');
   const [term, setTerm] = useState('');
 
   useEffect(() => {
-    api.getAllEpisodes().then((res) => {
-      setEpisodes(res);
-    });
-  }, []);
+    async function fetchData() {
+      const episodesRequest = await api.getAllEpisodes();
+      setEpisodes(episodesRequest);
+      dispatch(getEpisodesAsync(episodesRequest));
+    }
+    fetchData();
+  }, [dispatch]);
 
   const filterPost = (items, filterType) =>
     items.filter((item) => item.episode.includes(filterType));
