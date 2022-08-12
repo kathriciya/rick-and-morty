@@ -7,21 +7,39 @@ import { getEpisodesAsync } from '../../../store/episodes';
 import api from '../../../api/api';
 import s from './catalogue-page.module.scss';
 import Layout from '../../layout/layout';
+import Error from '../../error-message/error-message';
+import Loader from '../../loader/loader';
 
 const CataloguePage = () => {
   const [episodes, setEpisodes] = useState([]);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState('S01');
   const [term, setTerm] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const episodesRequest = await api.getAllEpisodes();
-      setEpisodes(episodesRequest);
-      dispatch(getEpisodesAsync(episodesRequest));
+      try {
+        setLoading(true);
+        const episodesRequest = await api.getAllEpisodes();
+        setEpisodes(episodesRequest);
+        dispatch(getEpisodesAsync(episodesRequest));
+        setLoading(false);
+      } catch (e) {
+        setErr(true);
+      }
     }
     fetchData();
   }, [dispatch]);
+
+  if (err) {
+    return <Error />;
+  }
+
+  if (loading && !err) {
+    return <Loader />;
+  }
 
   const filterPost = (items, filterType) =>
     items.filter((item) => item.episode.includes(filterType));
