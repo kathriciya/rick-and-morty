@@ -39,7 +39,7 @@ class Api {
 
   getLocation = async (id) => {
     const res = await this.getResource(`/location/${id}`);
-    return res;
+    return this._transformLocation(res);
   };
 
   getAllEpisodes = async () => {
@@ -72,6 +72,17 @@ class Api {
     return {
       id: location.id,
       name: location.name,
+    };
+  };
+
+  // eslint-disable-next-line class-methods-use-this
+  _transformLocation = (location) => {
+    return {
+      id: location.id,
+      name: location.name,
+      type: location.type,
+      dimension: location.dimension,
+      residents: [...location.residents],
     };
   };
 
