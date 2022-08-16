@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import cn from 'classnames';
 import api from '../../../api/api';
+import Error from '../../error-message/error-message';
 import Layout from '../../layout/layout';
+import Loader from '../../loader/loader';
 import s from './character-page.mudule.scss';
 
 const CharacterPage = () => {
@@ -17,17 +19,35 @@ const CharacterPage = () => {
     status: '',
     origin: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
 
   useEffect(() => {
-    api.getCharacter(characterId).then((res) => {
-      setPerson(res);
-    });
-  });
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const characterRequest = await api.getCharacter(characterId);
+        setPerson(characterRequest);
+        setLoading(false);
+      } catch (e) {
+        setErr(true);
+      }
+    }
+    fetchData();
+  }, [characterId]);
 
   const modifyUrl = (url) => {
     const num = url.match(/\d+$/);
     return `Episode ${num}`;
   };
+
+  if (err) {
+    return <Error />;
+  }
+
+  if (loading && !err) {
+    return <Loader />;
+  }
 
   return (
     <Layout title='Character information'>
