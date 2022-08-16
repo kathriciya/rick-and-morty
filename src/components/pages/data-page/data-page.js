@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import s from './character-all-page.module.scss';
+import s from './data-page.module.scss';
 import Layout from '../../layout/layout';
 import api from '../../../api/api';
 import SearchPanel from '../../search-panel/search-panel';
@@ -8,29 +8,29 @@ import Button from '../../button/button';
 import Error from '../../error-message/error-message';
 import Loader from '../../loader/loader';
 
-const CharacterAllPage = () => {
-  const [characters, setCharacters] = useState([]);
-  const [pageCharacters, setPageCharacters] = useState([]);
+const DataPage = ({ dataType }) => {
+  const [data, setData] = useState([]);
+  const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
   const [newItemLoading, setNewItemLoading] = useState(false);
-  const [charactersEnded, setCharactersEnded] = useState(false);
+  const [dataEnded, setDataEnded] = useState(false);
   const [term, setTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
 
-  const onCharactersLoaded = (newCharactersList) => {
+  const onDataLoaded = (newDataList) => {
     let ended = false;
-    if (newCharactersList.length < 19) {
+    if (newDataList.length < 19) {
       ended = true;
     }
-    setPageCharacters([...pageCharacters, ...newCharactersList]);
+    setPageData([...pageData, ...newDataList]);
     setLoading(false);
     setNewItemLoading(false);
     setPage(page + 1);
-    setCharactersEnded(ended);
+    setDataEnded(ended);
   };
 
-  const onCharListLoading = () => {
+  const onDataListLoading = () => {
     setNewItemLoading(true);
   };
 
@@ -40,19 +40,27 @@ const CharacterAllPage = () => {
   };
 
   const onRequest = (pageNum, initial) => {
-    onCharListLoading();
+    onDataListLoading();
     // eslint-disable-next-line no-unused-expressions
     initial ? setNewItemLoading(false) : setNewItemLoading(true);
-    api.getPageCharacters(pageNum).then(onCharactersLoaded).catch(onError);
+    if (dataType === 'locations') {
+      api.getPageLocations(pageNum).then(onDataLoaded).catch(onError);
+    } else if (dataType === 'characters') {
+      api.getPageCharacters(pageNum).then(onDataLoaded).catch(onError);
+    }
   };
-  const onAllCharLoading = (res) => {
-    setCharacters(res);
+  const onAllDataLoading = (res) => {
+    setData(res);
     setLoading(false);
   };
 
   useEffect(() => {
-    api.getAllCharacters().then(onAllCharLoading).catch(onError);
-  }, []);
+    if (dataType === 'locations') {
+      api.getAllLocations().then(onAllDataLoading).catch(onError);
+    } else if (dataType === 'characters') {
+      api.getAllCharacters().then(onAllDataLoading).catch(onError);
+    }
+  }, [dataType]);
 
   useEffect(() => {
     onRequest(page, true);
@@ -68,7 +76,7 @@ const CharacterAllPage = () => {
     setTerm(character);
   };
 
-  const visibleCharacters = searchEmp(characters, term);
+  const visibleData = searchEmp(data, term);
 
   if (err) {
     return <Error />;
@@ -78,21 +86,24 @@ const CharacterAllPage = () => {
     return <Loader />;
   }
 
+  const value = dataType === 'locations' ? 'location' : 'character';
+  const title = dataType === 'locations' ? 'Locations' : 'Characters';
+
   return (
     <Layout
-      title='Characters'
-      desc={` A total of ${characters.length} characters. ${pageCharacters.length} characters shown`}
+      title={title}
+      desc={` A total of ${data.length} ${value}s. ${pageData.length} ${value}s shown`}
     >
       <div className={s.app_panel}>
         <SearchPanel className={s.search} onUpdateSearch={onUpdateSearch} />
       </div>
-      {characters.length !== 0 && term.length === 0 ? (
+      {data.length !== 0 && term.length === 0 ? (
         <div>
           <ul className={s.list}>
-            {pageCharacters.map((item) => {
+            {pageData.map((item) => {
               return (
                 <li key={item.id} name={item.name} className={s.item}>
-                  <Link className={s.link} to={`/character/${item.id}`}>
+                  <Link className={s.link} to={`/${value}/${item.id}`}>
                     {item.name}
                   </Link>
                 </li>
@@ -102,17 +113,17 @@ const CharacterAllPage = () => {
           <Button
             className={s.load}
             disabled={newItemLoading}
-            style={{ display: charactersEnded ? 'none' : 'block' }}
+            style={{ display: dataEnded ? 'none' : 'block' }}
             label='Load More'
             onClick={() => onRequest(page)}
           />
         </div>
       ) : (
         <ul className={s.list}>
-          {visibleCharacters.map((item) => {
+          {visibleData.map((item) => {
             return (
               <li key={item.id} name={item.name} className={s.item}>
-                <Link className={s.link} to={`/character/${item.id}`}>
+                <Link className={s.link} to={`/${value}/${item.id}`}>
                   {item.name}
                 </Link>
               </li>
@@ -124,4 +135,4 @@ const CharacterAllPage = () => {
   );
 };
 
-export default CharacterAllPage;
+export default DataPage;

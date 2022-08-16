@@ -9,9 +9,8 @@ import {
   CharacterPage,
   NotFoundPage,
   CataloguePage,
-  LocationAllPage,
-  CharacterAllPage,
   LocationPage,
+  DataPage,
 } from '../pages';
 import Footer from '../footer/footer';
 import Header from '../header/header';
@@ -25,9 +24,12 @@ const App = () => {
           <Route path='/' element={<MainPage />} />
           <Route path='/episode' element={<CataloguePage />} />
           <Route path='/episode/:episodeId' element={<EpisodePage />} />
-          <Route path='/location' element={<LocationAllPage />} />
+          <Route path='/location' element={<DataPage dataType='locations' />} />
           <Route path='/location/:locationId' element={<LocationPage />} />
-          <Route path='/character' element={<CharacterAllPage />} />
+          <Route
+            path='/character'
+            element={<DataPage dataType='characters' />}
+          />
           <Route path='/character/:characterId' element={<CharacterPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
