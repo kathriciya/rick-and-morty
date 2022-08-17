@@ -4,7 +4,8 @@ import CharacterPage from './character-page/character-page';
 import NotFoundPage from './not-found-page/not-found-page';
 import CataloguePage from './catalogue-page/catalogue-page';
 import LocationPage from './location-page/location-page';
-import DataPage from './data-page/data-page';
+import LocationAllPage from './location-all-page/location-all-page';
+import CharacterAllPage from './character-all-page/character-all-page';
 
 export {
   MainPage,
@@ -13,5 +14,6 @@ export {
   NotFoundPage,
   CataloguePage,
   LocationPage,
-  DataPage,
+  LocationAllPage,
+  CharacterAllPage,
 };

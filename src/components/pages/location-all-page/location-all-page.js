@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import s from './data-page.module.scss';
+import cn from 'classnames';
+import s from './location-all-page.module.scss';
 import Layout from '../../layout/layout';
 import api from '../../../api/api';
 import SearchPanel from '../../search-panel/search-panel';
@@ -8,29 +9,28 @@ import Button from '../../button/button';
 import Error from '../../error-message/error-message';
 import Loader from '../../loader/loader';
 
-const DataPage = ({ dataType }) => {
-  const [data, setData] = useState([]);
-  const [pageData, setPageData] = useState([]);
+const LocationAllPage = () => {
+  const [locations, setLocations] = useState([]);
+  const [pageLocations, setPageLocations] = useState([]);
   const [page, setPage] = useState(1);
   const [newItemLoading, setNewItemLoading] = useState(false);
-  const [dataEnded, setDataEnded] = useState(false);
+  const [locationsEnded, setLocationsEnded] = useState(false);
   const [term, setTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
 
-  const onDataLoaded = (newDataList) => {
+  const onLocationsLoaded = (newLocationsList) => {
     let ended = false;
-    if (newDataList.length < 19) {
+    if (newLocationsList.length < 19) {
       ended = true;
     }
-    setPageData([...pageData, ...newDataList]);
-    setLoading(false);
+    setPageLocations([...pageLocations, ...newLocationsList]);
     setNewItemLoading(false);
     setPage(page + 1);
-    setDataEnded(ended);
+    setLocationsEnded(ended);
   };
 
-  const onDataListLoading = () => {
+  const onLocationsListLoading = () => {
     setNewItemLoading(true);
   };
 
@@ -40,27 +40,20 @@ const DataPage = ({ dataType }) => {
   };
 
   const onRequest = (pageNum, initial) => {
-    onDataListLoading();
+    onLocationsListLoading();
     // eslint-disable-next-line no-unused-expressions
     initial ? setNewItemLoading(false) : setNewItemLoading(true);
-    if (dataType === 'locations') {
-      api.getPageLocations(pageNum).then(onDataLoaded).catch(onError);
-    } else if (dataType === 'characters') {
-      api.getPageCharacters(pageNum).then(onDataLoaded).catch(onError);
-    }
+    api.getPageLocations(pageNum).then(onLocationsLoaded);
   };
-  const onAllDataLoading = (res) => {
-    setData(res);
+
+  const onAllLocationsLoading = (res) => {
+    setLocations(res);
     setLoading(false);
   };
 
   useEffect(() => {
-    if (dataType === 'locations') {
-      api.getAllLocations().then(onAllDataLoading).catch(onError);
-    } else if (dataType === 'characters') {
-      api.getAllCharacters().then(onAllDataLoading).catch(onError);
-    }
-  }, [dataType]);
+    api.getAllLocations().then(onAllLocationsLoading).catch(onError);
+  }, []);
 
   useEffect(() => {
     onRequest(page, true);
@@ -76,7 +69,7 @@ const DataPage = ({ dataType }) => {
     setTerm(character);
   };
 
-  const visibleData = searchEmp(data, term);
+  const visibleLocations = searchEmp(locations, term);
 
   if (err) {
     return <Error />;
@@ -86,24 +79,21 @@ const DataPage = ({ dataType }) => {
     return <Loader />;
   }
 
-  const value = dataType === 'locations' ? 'location' : 'character';
-  const title = dataType === 'locations' ? 'Locations' : 'Characters';
-
   return (
     <Layout
-      title={title}
-      desc={` A total of ${data.length} ${value}s. ${pageData.length} ${value}s shown`}
+      title='Locations'
+      desc={` A total of ${locations.length} locations. ${pageLocations.length} locations shown`}
     >
       <div className={s.app_panel}>
         <SearchPanel className={s.search} onUpdateSearch={onUpdateSearch} />
       </div>
-      {data.length !== 0 && term.length === 0 ? (
+      {locations.length !== 0 && term.length === 0 ? (
         <div>
           <ul className={s.list}>
-            {pageData.map((item) => {
+            {pageLocations.map((item) => {
               return (
                 <li key={item.id} name={item.name} className={s.item}>
-                  <Link className={s.link} to={`/${value}/${item.id}`}>
+                  <Link className={s.link} to={`/location/${item.id}`}>
                     {item.name}
                   </Link>
                 </li>
@@ -111,19 +101,18 @@ const DataPage = ({ dataType }) => {
             })}
           </ul>
           <Button
-            className={s.load}
+            className={cn(s.load, { [s.btn]: locationsEnded })}
             disabled={newItemLoading}
-            style={{ display: dataEnded ? 'none' : 'block' }}
             label='Load More'
             onClick={() => onRequest(page)}
           />
         </div>
       ) : (
         <ul className={s.list}>
-          {visibleData.map((item) => {
+          {visibleLocations.map((item) => {
             return (
               <li key={item.id} name={item.name} className={s.item}>
-                <Link className={s.link} to={`/${value}/${item.id}`}>
+                <Link className={s.link} to={`/location/${item.id}`}>
                   {item.name}
                 </Link>
               </li>
@@ -135,4 +124,4 @@ const DataPage = ({ dataType }) => {
   );
 };
 
-export default DataPage;
+export default LocationAllPage;

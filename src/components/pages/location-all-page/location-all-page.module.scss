@@ -11,6 +11,23 @@
   list-style: none;
 }
 
+.load {
+  margin: 0 auto;
+}
+
+.btn {
+  display: none;
+}
+
+.search {
+  max-width: 700px;
+  margin: 0 auto;
+
+  @media (max-width: 991px) {
+    max-width: 500px;
+  }
+}
+
 .item {
   font-size: 0.7rem;
   text-align: center;
@@ -24,17 +41,4 @@
 .link {
   color: $black !important;
   text-decoration: none;
-}
-
-.load {
-  margin: 0 auto;
-}
-
-.search {
-  max-width: 700px;
-  margin: 0 auto;
-
-  @media (max-width: 991px) {
-    max-width: 500px;
-  }
 }
