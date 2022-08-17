@@ -4,6 +4,21 @@ import cn from 'classnames';
 import s from './header.module.scss';
 import logo from '../../assets/logo.png';
 
+const MENU = [
+  {
+    title: 'Episodes',
+    to: '/episode',
+  },
+  {
+    title: 'Locations',
+    to: '/location',
+  },
+  {
+    title: 'Characters',
+    to: '/character',
+  },
+];
+
 const Header = () => {
   const setActiveLink = ({ isActive }) =>
     isActive ? `${s.link} ${s.active}` : s.link;
@@ -15,22 +30,13 @@ const Header = () => {
         </Link>
         <nav>
           <ul className={cn('d-flex', s.list)}>
-            <li className={s.item}>
-              <NavLink to='/episode' className={setActiveLink}>
-                Episodes
-              </NavLink>
-            </li>
-
-            <li className={s.item}>
-              <NavLink to='/location' className={setActiveLink}>
-                Locations
-              </NavLink>
-            </li>
-            <li className={s.item}>
-              <NavLink to='/character' className={setActiveLink}>
-                Characters
-              </NavLink>
-            </li>
+            {MENU.map(({ title, to }, i) => (
+              <li key={i} className={s.item}>
+                <NavLink to={to} className={setActiveLink}>
+                  {title}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
