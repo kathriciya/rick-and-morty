@@ -19,9 +19,10 @@
   list-style: none;
 
   li::before {
-    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: -22px;
     width: 1em;
-    margin-left: 3px;
     color: $main;
     font-weight: 700;
     content: '\2714';
@@ -45,5 +46,9 @@
 }
 
 .character_item {
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { selectEpisodesData } from '../../../store/episodes';
 // import cn from 'classnames';
 import api from '../../../api/api';
 import Error from '../../error-message/error-message';
@@ -8,6 +10,7 @@ import Loader from '../../loader/loader';
 import s from './character-page.mudule.scss';
 
 const CharacterPage = () => {
+  const episodesRedux = useSelector(selectEpisodesData);
   const { characterId } = useParams();
   const [person, setPerson] = useState({
     image: '',
@@ -35,6 +38,10 @@ const CharacterPage = () => {
     }
     fetchData();
   }, [characterId]);
+
+  const episodes = episodesRedux.filter((item) =>
+    person.episode.includes(item.url)
+  );
 
   const modifyUrl = (url) => {
     const num = url.match(/\d+$/);
@@ -84,9 +91,10 @@ const CharacterPage = () => {
           <b className={s.label}>Episodes:</b>
         </span>
         <ul className={s.list}>
-          {person.episode.map((item, i) => (
-            <li className={s.character_item} key={i}>
-              {modifyUrl(item)}
+          {episodes.map((item) => (
+            <li className={s.character_item} key={item.id}>
+              <span>{item.name}</span>
+              <span>({modifyUrl(item.url)})</span>
             </li>
           ))}
         </ul>
