@@ -1,1 +1,35 @@
 @import './../../../style/_variable';
+
+.btn{
+    position: relative;
+    z-index: 2;
+}
+
+.box {
+    position: relative;
+    height: 320px;
+    margin-top: -90px;
+}
+
+.heros {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: url("../../../assets/rik-and-morty.png") bottom left no-repeat;
+    background-size: 256px 314px;
+    width: 60%;
+    height: 100%;
+    opacity: 0;
+    animation: heros-move-in 1.5s 1.7s forwards;
+}
+
+@keyframes heros-move-in {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        opacity: 1;
+        background-position-x: 50%;
+    }
+}
